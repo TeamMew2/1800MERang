@@ -2,9 +2,9 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button, Alert } from "react-native";
 import { NativeRouter, Route, Link } from "react-router-native";
-import Home from "./src/components/Home";
-import Search from "./src/components/Search";
-import Favorites from "./src/components/Favorites";
+import Home from "./components/Home";
+import Search from "./components/Search";
+import Favorites from "./components/Favorites";
 
 export default function App() {
   return (
