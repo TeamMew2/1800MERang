@@ -2,9 +2,9 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NativeRouter, Route, Link } from "react-router-native";
-import Home from "./navigation/Home";
-import Search from "./navigation/Search";
-import Favorites from "./navigation/Favorites";
+import Home from "./components/Home";
+import Search from "./components/Search";
+import Favorites from "./components/Favorites";
 import { AntDesign } from '@expo/vector-icons'; 
 import { NativeBaseProvider } from 'native-base';
 

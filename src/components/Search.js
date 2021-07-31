@@ -36,15 +36,17 @@ export default function Search() {
         />
         <Button
           onPress={() => {
-            db.collection("companies").add({
-              companyName: text,
-          })
-          .then((docRef) => {
-              console.log("Document written with ID: ", docRef.id);
-          })
-          .catch((error) => {
-              console.error("Error adding document: ", error);
-          });
+            fetch(`http://192.168.1.221:3000/?company=${text}`)
+            .then(res => {
+             return res.json()
+            })
+            .then(res => {
+              console.log(res.message)
+            })
+            .catch(err => {
+              console.log(err.message)
+              throw err
+            })
           }}
           disabled={buttonDisabled}
           backgroundColor="#00989d"
@@ -68,9 +70,6 @@ const styles = StyleSheet.create({
     header: {
       paddingTop: 100,
       paddingBottom: 20,
-      // alignSelf: "stretch",
-      // backgroundColor: "#fff023",
-      // borderWidth: 1,
     },
     subtitle: {
       fontSize: 20,

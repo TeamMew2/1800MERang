@@ -1,10 +1,12 @@
-import Firebase from 'firebase';
+const Firebase = require('firebase');
 
 Firebase.initializeApp({
-  apiKey: 'AIzaSyBSCIolsa3JrFZolRVhCBiHugyd4XsF8gc',
+  apiKey: process.env.GCP_KEY,
   authDomain: 'merang-9053b.firebaseapp.com',
   projectId: 'merang-9053b',
   storageBucket: 'merang-9053b.appspot.com',
 });
 
-export const db = firebase.firestore()
+const db = Firebase.firestore()
+
+module.exports = {db}
