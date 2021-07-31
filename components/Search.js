@@ -10,7 +10,7 @@ export default function Search() {
   const getData = async (placeName) => {
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     let response = await fetch(
-      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${placeName}'&key=AIzaSyDAa97o9R3dHjlHO6Paj2n-WAEMcWIBYs0`,
+      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${placeName}'&key=${API_KEY}`,
       
     )
     let json = await response.json()
