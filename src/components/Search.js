@@ -2,7 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import { Heading, Input, Button } from 'native-base';
-import { db } from '../config.js'
 import { style, width } from "styled-system";
 
 export default function Search() {
@@ -36,17 +35,22 @@ export default function Search() {
         />
         <Button
           onPress={() => {
-            fetch(`http://192.168.1.221:3000/?company=${text}`)
-            .then(res => {
-             return res.json()
-            })
-            .then(res => {
-              console.log(res.message)
-            })
-            .catch(err => {
-              console.log(err.message)
-              throw err
-            })
+            setButtonDisabled(true);
+            fetch(`http://192.168.1.156:3000/?company=${text}`)
+              .then((res) => {
+                return res.json();
+              })
+              .then((res) => {
+                console.log(res.message);
+                setText("");
+              })
+              .catch((err) => {
+                console.log(err.message);
+                throw err;
+              })
+              .finally(() => {
+                setButtonDisabled(false);
+              });
           }}
           disabled={buttonDisabled}
           backgroundColor="#00989d"
@@ -55,6 +59,9 @@ export default function Search() {
         >
           Search
         </Button>
+      </View>
+      <View>
+        <Text>results from db placeholder</Text>
       </View>
     </View>
   );
