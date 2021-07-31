@@ -7,6 +7,16 @@ export default function Search() {
   const [text, setText] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
+  const getData = async (placeName) => {
+    const proxyurl = "https://cors-anywhere.herokuapp.com/";
+    let response = await fetch(
+      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${placeName}'&key=AIzaSyDAa97o9R3dHjlHO6Paj2n-WAEMcWIBYs0`,
+      
+    )
+    let json = await response.json()
+    console.log(json.results[0].place_id)
+  }
+
   return (
     <View style={styles.container}>
       <Text>1-800MERANG</Text>
@@ -28,7 +38,8 @@ export default function Search() {
       />
       <Text>input text: {text}</Text>
       <Button
-        onPress={() => Alert.alert(text)}
+        // onPress={() => Alert.alert(text)}
+        onPress={() => getData(text)}
         disabled={buttonDisabled}
         title="Search"
         color="#007AFF"
