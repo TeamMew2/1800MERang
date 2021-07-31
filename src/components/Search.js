@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button, Alert } from "react-native";
+import { db } from '../config.js'
 
 export default function Search() {
   const placeholderText = "Enter company name...";
@@ -38,8 +39,17 @@ export default function Search() {
       />
       <Text>input text: {text}</Text>
       <Button
-        // onPress={() => Alert.alert(text)}
-        onPress={() => getData(text)}
+        onPress={() => {
+           db.collection("companies").add({
+             companyName: text,
+         })
+         .then((docRef) => {
+             console.log("Document written with ID: ", docRef.id);
+         })
+         .catch((error) => {
+             console.error("Error adding document: ", error);
+        });
+        }}
         disabled={buttonDisabled}
         title="Search"
         color="#007AFF"
