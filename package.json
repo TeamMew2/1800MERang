@@ -4,7 +4,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "nodemon ./api/bin/www",
     "expo-start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -14,6 +14,7 @@
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
     "express": "~4.16.1",
@@ -21,6 +22,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
+    "nodemon": "^2.0.12",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
