@@ -1,22 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button, Alert } from "react-native";
-import { db } from '../config.js'
 
 export default function Search() {
   const placeholderText = "Enter company name...";
   const [text, setText] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
-
-  const getData = async (placeName) => {
-    const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    let response = await fetch(
-      `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${placeName}'&key=${API_KEY}`,
-      
-    )
-    let json = await response.json()
-    console.log(json.results[0].place_id)
-  }
 
   return (
     <View style={styles.container}>
@@ -40,16 +29,19 @@ export default function Search() {
       <Text>input text: {text}</Text>
       <Button
         onPress={() => {
-           db.collection("companies").add({
-             companyName: text,
-         })
-         .then((docRef) => {
-             console.log("Document written with ID: ", docRef.id);
-         })
-         .catch((error) => {
-             console.error("Error adding document: ", error);
-        });
-        }}
+        fetch(`http://localhost:3000/?company=${text}`)
+        .then(res => {
+         return res.json()
+        })
+        .then(res => {
+          console.log(res.message)
+        })
+        .catch(err => {
+          console.log(err.message)
+          throw err
+        })
+      }}
+        
         disabled={buttonDisabled}
         title="Search"
         color="#007AFF"
