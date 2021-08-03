@@ -5,7 +5,8 @@ var firebase = require('../config')
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  const { company } = req.query 
+  const { company,lat,lng } = req.query 
+  console.log(company, lat, lng)
   firebase.db.collection("companies").add({
      companyName: company,
    })

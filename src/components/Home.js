@@ -1,13 +1,15 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
-import PhoneSignIn from './PhoneSignIn';
+import { StyleSheet, View, Text, Image } from "react-native";
 
 export default function Home() {
   return (
     <View style={styles.container}>
-      <Text>Welcome Home</Text>
-      <PhoneSignIn></PhoneSignIn>
+      <Image
+        style={styles.logo}
+        source={require("../assets/team-jmexclusives.png")}
+        />
+      <Text style={styles.title}>1-800MERANG</Text>
     </View>
   );
 }
@@ -21,4 +23,14 @@ const styles = StyleSheet.create({
       marginTop: 25,
       padding: 10,
     },
+    logo: {
+      height: 500,
+      width: 500,
+      paddingBottom: 20,
+    },
+    title: {
+      fontSize: 30,
+      fontWeight: "bold",
+      color: "#00989d",
+    }
   });
