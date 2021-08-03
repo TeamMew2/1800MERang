@@ -2,8 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import { Heading, Input, Button } from 'native-base';
-import { db } from '../config.js'
-import { style, width } from "styled-system";
 
 export default function Search() {
   const placeholderText = "Search Company Name";
@@ -36,12 +34,12 @@ export default function Search() {
         />
         <Button
           onPress={() => {
-            fetch(`http://192.168.1.221:3000/?company=${text}`)
+            fetch(`http://192.168.1.221:3000/?company=${text}&lng=${40.7070658}&lat=${-74.4173763}`)
             .then(res => {
              return res.json()
             })
             .then(res => {
-              console.log(res.message)
+              console.log(res)
             })
             .catch(err => {
               console.log(err.message)
