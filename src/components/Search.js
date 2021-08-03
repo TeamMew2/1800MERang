@@ -1,14 +1,46 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import { Heading, Input, Button } from 'native-base';
+import { flex } from "styled-system";
+import Contact from "./Contact";
+import * as Location from 'expo-location';
+
+
 
 export default function Search() {
   const placeholderText = "Search Company Name";
   const titleText = "Find service desk fast";
   const subtitleText = "and get the help you need.";
   const [text, setText] = useState("");
+  const [resultFlag,setresultFlag] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let status = 'Waiting..';
+  if (errorMsg) {
+    status = errorMsg;
+  } else if (location) {
+    status = JSON.stringify(location);
+    console.log(location.coords.latitude, location.coords.longitude)
+  }
+
+
 
   return (
     <View style={styles.container}>
@@ -34,12 +66,13 @@ export default function Search() {
         />
         <Button
           onPress={() => {
-            fetch(`http://192.168.1.221:3000/?company=${text}&lng=${40.7070658}&lat=${-74.4173763}`)
+            fetch(`http://localhost:3000/?company=${text}?lat=${location.coords.latitude}?lng=${location.coords.longitude}`)
             .then(res => {
              return res.json()
             })
             .then(res => {
-              console.log(res)
+              setresultFlag(true);
+              console.log(res.message)
             })
             .catch(err => {
               console.log(err.message)
@@ -52,9 +85,12 @@ export default function Search() {
           accessibilityLabel="Search for company numbers with this purple button"
         >
           Search
-        </Button>
-      </View>
+        </Button> 
+        <Contact text={text} />       
+      </View>            
     </View>
+    
+    
   );
 }
 
@@ -78,4 +114,5 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: 10,
     },
+    
   });
