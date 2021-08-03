@@ -1,10 +1,12 @@
+var axios = require('axios');
 var express = require('express');
 var router = express.Router();
 var firebase = require('../config')
+var dotenv = require('dotenv');
+dotenv.config();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
   const { company } = req.query 
   firebase.db.collection("companies").add({
      companyName: company,
@@ -17,5 +19,20 @@ router.get('/', function(req, res, next) {
    });
 })
 
+router.get('/search', async function (req, res, next) {
+  try { 
+    const placeBasics = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${process.env.GOOGLE_API_KEY}&input=${req.query.company}&inputtype=textquery&fields=place_id`
+    );
+    const placeId = placeBasics.data.candidates[0].place_id;
+    const placeDetails = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/details/json?key=${process.env.GOOGLE_API_KEY}&place_id=${placeId}`
+    );
+  res.send(placeDetails.data.result.formatted_phone_number);
+  } catch(e) {
+    res.send(e);
+  }
+  
+});
 
 module.exports = router;
