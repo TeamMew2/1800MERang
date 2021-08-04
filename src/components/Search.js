@@ -13,11 +13,13 @@ export default function Search() {
   const titleText = "Find service desk fast";
   const subtitleText = "and get the help you need.";
   const [text, setText] = useState("");
+  const [number, setNumber] = useState("")
   const [resultFlag,setresultFlag] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  let currentNum;
 
   useEffect(() => {
     (async () => {
@@ -40,6 +42,9 @@ export default function Search() {
     console.log(location.coords.latitude, location.coords.longitude)
   }
 
+  if(number) {
+    currentNum = <Contact text={text} number={number}/>   
+  }
 
 
   return (
@@ -66,13 +71,15 @@ export default function Search() {
         />
         <Button
           onPress={() => {
-            fetch(`http://localhost:3000/?company=${text}?lat=${location.coords.latitude}?lng=${location.coords.longitude}`)
+            fetch(`http://localhost:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
             .then(res => {
+             console.log('res', res)
              return res.json()
             })
             .then(res => {
               setresultFlag(true);
-              console.log(res.message)
+              console.log(res.phone_number)
+              setNumber(res.phone_number)
             })
             .catch(err => {
               console.log(err.message)
@@ -85,8 +92,9 @@ export default function Search() {
           accessibilityLabel="Search for company numbers with this purple button"
         >
           Search
-        </Button> 
-        <Contact text={text} />       
+        </Button>
+        {currentNum}
+            
       </View>            
     </View>
     

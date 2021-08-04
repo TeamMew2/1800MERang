@@ -6,11 +6,9 @@ const fetch = require('node-fetch')
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  const { company, lat, lng } = req.query 
-
-  console.log(company, lat, lng)
-
-  console.log("URL ", "https://maps.googleapis.com/maps/api/place/textsearch/json?query=",company,"&location=",lng,",",lat,"&radius=10000&key=AIzaSyDAa97o9R3dHjlHO6Paj2n-WAEMcWIBYs0")
+  const { company, lat, lng } = req.query   
+  console.log(company, lat, lng)  
+  console.log("URL ", "https://maps.googleapis.com/maps/api/place/textsearch/json?query=",company,"&location=",lng,",",lat,"&",process.env.AYE_APP)
 
   fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${company}&location=${lng},${lat}&radius=10000&key=${process.env.AYE_APP}`)
   .then(result => result.json())
