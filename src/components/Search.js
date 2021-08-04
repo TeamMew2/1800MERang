@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect} from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View, ScrollView,Alert, TextInput } from "react-native";
 import { Heading, Input, Button } from 'native-base';
 import { flex } from "styled-system";
 import Contact from "./Contact";
@@ -14,7 +14,7 @@ export default function Search() {
   const subtitleText = "and get the help you need.";
   const [text, setText] = useState("");
   const [number, setNumber] = useState("")
-  const [resultFlag,setresultFlag] = useState(false);
+  const [resultText,setresultText] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const [location, setLocation] = useState(null);
@@ -43,21 +43,24 @@ export default function Search() {
   }
 
   if(number) {
-    currentNum = <Contact text={text} number={number}/>   
+    currentNum = <Contact text={resultText} number={number}/>   
   }
 
 
   return (
-    <View style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      keyboardShouldPersistTaps='handled'
+    >
       <View style={styles.header}>
         <Heading size="xl" paddingBottom="1">{titleText}</Heading>
         <Text style={styles.subtitle}>{subtitleText}</Text>
         <StatusBar style="auto" />
-        <Input
+        <TextInput
           style={styles.search}
           variant="rounded"
           placeholder={placeholderText}
-          defaultValue={text}
+          value={text}
           onChangeText={(text) => {
             setText(text);
             text === "" ? setButtonDisabled(true) : setButtonDisabled(false);
@@ -71,20 +74,21 @@ export default function Search() {
         />
         <Button
           onPress={() => {
-            fetch(`http://localhost:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
-            .then(res => {
-             console.log('res', res)
-             return res.json()
-            })
-            .then(res => {
-              setresultFlag(true);
-              console.log(res.phone_number)
-              setNumber(res.phone_number)
-            })
-            .catch(err => {
-              console.log(err.message)
-              throw err
-            })
+            if(location){
+              fetch(`http://192.168.181.128:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
+              .then(res => {              
+              return res.json()
+              })
+              .then(res => {
+                setresultText(text);
+                setText('')
+                setNumber(res.phone_number)
+              })
+              .catch(err => {
+                console.log(err.message)
+                throw err
+              })
+            }
           }}
           disabled={buttonDisabled}
           backgroundColor="#00989d"
@@ -96,7 +100,7 @@ export default function Search() {
         {currentNum}
             
       </View>            
-    </View>
+    </ScrollView>
     
     
   );
@@ -106,8 +110,8 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "#fff",
-      alignItems: "flex-start",
-      justifyContent: "flex-start",
+      // alignItems: "flex-start",
+      // justifyContent: "flex-start",
     },
     header: {
       paddingTop: 100,
