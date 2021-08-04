@@ -2,6 +2,7 @@ var axios = require('axios');
 var express = require('express');
 var router = express.Router();
 var firebase = require('../config')
+<<<<<<< HEAD
 var dotenv = require('dotenv');
 dotenv.config();
 
@@ -17,6 +18,40 @@ router.get('/', function(req, res, next) {
    .catch((error) => {
     res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
    });
+=======
+const fetch = require('node-fetch')
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+
+  const { company, lat, lng } = req.query   
+  console.log(company, lat, lng)  
+  console.log("URL ", "https://maps.googleapis.com/maps/api/place/textsearch/json?query=",company,"&location=",lng,",",lat,"&",process.env.AYE_APP)
+
+  fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${company}&location=${lng},${lat}&radius=10000&key=${process.env.AYE_APP}`)
+  .then(result => result.json())
+  .catch(err => console.log(err))
+  .then(result => {
+      fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${result.results[0].place_id}&key=${process.env.AYE_APP}`)
+      .then(result => result.json())
+      .then(result => {
+        return result.result.formatted_phone_number
+      })
+      .then(result => res.status(200).send(JSON.stringify({phone_number: result})))
+  })
+  
+
+   
+  // firebase.db.collection("companies").add({
+  //    companyName: company,
+  //  })
+  //  .then((docRef) => {
+  //   res.status(200).send(JSON.stringify({message: `Document written with ID: ${docRef.id}`}));
+  //  })
+  //  .catch((error) => {
+  //   res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
+  //  });
+>>>>>>> f259eeecefabb2ac3b05df0f93750d118cf549f5
 })
 
 router.get('/search', async function (req, res, next) {

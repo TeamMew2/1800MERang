@@ -1,15 +1,51 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import { Heading, Input, Button } from 'native-base';
-import { style, width } from "styled-system";
+import { flex } from "styled-system";
+import Contact from "./Contact";
+import * as Location from 'expo-location';
+
+
 
 export default function Search() {
   const placeholderText = "Search Company Name";
   const titleText = "Find service desk fast";
   const subtitleText = "and get the help you need.";
   const [text, setText] = useState("");
+  const [number, setNumber] = useState("")
+  const [resultFlag,setresultFlag] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  let currentNum;
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
+
+  let status = 'Waiting..';
+  if (errorMsg) {
+    status = errorMsg;
+  } else if (location) {
+    status = JSON.stringify(location);
+    console.log(location.coords.latitude, location.coords.longitude)
+  }
+
+  if(number) {
+    currentNum = <Contact text={text} number={number}/>   
+  }
+
 
   return (
     <View style={styles.container}>
@@ -35,22 +71,20 @@ export default function Search() {
         />
         <Button
           onPress={() => {
-            setButtonDisabled(true);
-            fetch(`http://192.168.1.156:3000/?company=${text}`)
-              .then((res) => {
-                return res.json();
-              })
-              .then((res) => {
-                console.log(res.message);
-                setText("");
-              })
-              .catch((err) => {
-                console.log(err.message);
-                throw err;
-              })
-              .finally(() => {
-                setButtonDisabled(false);
-              });
+            fetch(`http://localhost:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
+            .then(res => {
+             console.log('res', res)
+             return res.json()
+            })
+            .then(res => {
+              setresultFlag(true);
+              console.log(res.phone_number)
+              setNumber(res.phone_number)
+            })
+            .catch(err => {
+              console.log(err.message)
+              throw err
+            })
           }}
           disabled={buttonDisabled}
           backgroundColor="#00989d"
@@ -59,11 +93,12 @@ export default function Search() {
         >
           Search
         </Button>
-      </View>
-      <View>
-        <Text>results from db placeholder</Text>
-      </View>
+        {currentNum}
+            
+      </View>            
     </View>
+    
+    
   );
 }
 
@@ -87,4 +122,5 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: 10,
     },
+    
   });

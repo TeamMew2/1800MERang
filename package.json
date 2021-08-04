@@ -13,13 +13,20 @@
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.0",
+<<<<<<< HEAD
     "axios": "^0.21.1",
+=======
+    "@react-native-firebase/app": "^12.4.0",
+    "@react-native-firebase/auth": "^12.4.0",
+>>>>>>> f259eeecefabb2ac3b05df0f93750d118cf549f5
     "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^10.0.0",
     "expo": "~42.0.1",
     "expo-firebase-recaptcha": "^1.4.2",
     "expo-font": "~9.2.1",
+    "expo-location": "^12.1.2",
     "expo-status-bar": "~1.0.4",
     "express": "~4.16.1",
     "firebase": "^8.8.1",
@@ -27,8 +34,10 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "native-base": "^3.0.6",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.12",
     "react": "16.13.1",
+    "react-apollo": "^3.1.5",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-safe-area-context": "3.2.0",
