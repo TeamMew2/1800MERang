@@ -13,12 +13,8 @@
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.0",
-<<<<<<< HEAD
-    "axios": "^0.21.1",
-=======
     "@react-native-firebase/app": "^12.4.0",
     "@react-native-firebase/auth": "^12.4.0",
->>>>>>> f259eeecefabb2ac3b05df0f93750d118cf549f5
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",

@@ -1,25 +1,11 @@
-var axios = require('axios');
 var express = require('express');
 var router = express.Router();
 var firebase = require('../config')
-<<<<<<< HEAD
 var dotenv = require('dotenv');
+const fetch = require('node-fetch')
+
 dotenv.config();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  const { company } = req.query 
-  firebase.db.collection("companies").add({
-     companyName: company,
-   })
-   .then((docRef) => {
-    res.status(200).send(JSON.stringify({message: `Document written with ID: ${docRef.id}`}));
-   })
-   .catch((error) => {
-    res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
-   });
-=======
-const fetch = require('node-fetch')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -51,19 +37,20 @@ router.get('/', function(req, res, next) {
   //  .catch((error) => {
   //   res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
   //  });
->>>>>>> f259eeecefabb2ac3b05df0f93750d118cf549f5
 })
 
 router.get('/search', async function (req, res, next) {
   try { 
-    const placeBasics = await axios.get(
+    const placeBasics = await fetch (
       `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=${process.env.GOOGLE_API_KEY}&input=${req.query.company}&inputtype=textquery&fields=place_id`
-    );
-    const placeId = placeBasics.data.candidates[0].place_id;
-    const placeDetails = await axios.get(
+    ); 
+    const placeBasicsData = await placeBasics.json();
+    const placeId = placeBasicsData.candidates[0].place_id;
+    const placeDetails = await fetch (
       `https://maps.googleapis.com/maps/api/place/details/json?key=${process.env.GOOGLE_API_KEY}&place_id=${placeId}`
     );
-  res.send(placeDetails.data.result.formatted_phone_number);
+    const placeDetailsData = await placeDetails.json();
+  res.send(placeDetailsData.result.formatted_phone_number);
   } catch(e) {
     res.send(e);
   }
