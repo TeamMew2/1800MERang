@@ -1,11 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect} from "react";
-import { Keyboard, StyleSheet, Text, View, Alert } from "react-native";
-import { Heading, Input, Button, Spinner, Center } from 'native-base';
+import { Keyboard, ScrollView, StyleSheet, Text, TextInput, View, Alert } from "react-native";
+import { Heading, Input, Button, Spinner } from 'native-base';
 import { flex } from "styled-system";
 import Contact from "./Contact";
 import * as Location from 'expo-location';
-
 
 
 export default function Search() {
@@ -15,7 +14,7 @@ export default function Search() {
   const [text, setText] = useState("");
   const [contactCompany, setContactCompany] = useState("");
   const [number, setNumber] = useState("")
-  const [resultFlag,setresultFlag] = useState(false);
+  const [resultText,setresultText] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const [location, setLocation] = useState(null);
@@ -51,16 +50,19 @@ export default function Search() {
 
 
   return (
-    <View style={styles.container}>
+    <ScrollView 
+      style={styles.container}
+      keyboardShouldPersistTaps='handled'
+    >
       <View style={styles.header}>
         <Heading size="xl" paddingBottom="1">{titleText}</Heading>
         <Text style={styles.subtitle}>{subtitleText}</Text>
         <StatusBar style="auto" />
-        <Input
+        <TextInput
           style={styles.search}
           variant="rounded"
           placeholder={placeholderText}
-          defaultValue={text}
+          value={text}
           onChangeText={(text) => {
             setText(text);
             text === "" ? setButtonDisabled(true) : setButtonDisabled(false);
@@ -109,7 +111,7 @@ export default function Search() {
         {currentNum}
             
       </View>            
-    </View>
+    </ScrollView>
     
     
   );
@@ -119,8 +121,8 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: "#fff",
-      alignItems: "flex-start",
-      justifyContent: "flex-start",
+      // alignItems: "flex-start",
+      // justifyContent: "flex-start",
     },
     header: {
       paddingTop: 100,
