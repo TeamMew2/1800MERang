@@ -32,7 +32,7 @@ export default function Search() {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
-  }, []);
+  }, [location]);
 
   let status = 'Waiting..';
   if (errorMsg) {
