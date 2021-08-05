@@ -29,7 +29,7 @@ export default function Search() {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced, });
       setLocation(location);
     })();
   }, []);
@@ -71,7 +71,7 @@ export default function Search() {
         />
         <Button
           onPress={() => {
-            fetch(`http://localhost:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
+            fetch(`http://192.168.1.185:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
             .then(res => {
              console.log('res', res)
              return res.json()
