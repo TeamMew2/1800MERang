@@ -20,7 +20,6 @@
     "debug": "~2.6.9",
     "dotenv": "^10.0.0",
     "expo": "~42.0.1",
-    "expo-firebase-recaptcha": "^1.4.2",
     "expo-font": "~9.2.1",
     "expo-location": "^12.1.2",
     "expo-status-bar": "~1.0.4",
