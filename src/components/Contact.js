@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Switch,Image,Button} from "react-native";
+import { StyleSheet, View, Text, Switch,Image,Button, TouchableOpacity} from "react-native";
 import { height } from "styled-system";
 import {Linking,Platform} from 'react-native'
 
@@ -40,8 +40,27 @@ export default function Contact(props) {
       
       <Button
         title='Call'        
+<<<<<<< HEAD
         onPress={()=>Linking.openURL(`telprompt:${props.number}`)}
       />
+=======
+        // style={styles.phone}
+        // source={require("../assets/phone_icon.png")}
+        onPress={() => dialCall(props.number)}
+        /> 
+      
+      {/* <TouchableOpacity style={styles.btn} >
+        <View style={styles.absoluteView}>
+            <Text>title</Text>
+        </View>
+        <Image 
+        source={require("../assets/phone_icon.png")}  
+        style={styles.phone}
+        onPress={() => dialCall(props.number)}
+        />
+    </TouchableOpacity> */}
+
+>>>>>>> 57dd654d721dc4674e9abbbad4ef8a4e54da78ec
       
     </View>
   );
@@ -71,5 +90,16 @@ const styles = StyleSheet.create({
       height: 30,
       width: 30,
       paddingBottom: 20,    
+    },
+    absoluteView: {
+      flex: 1,
+      position: 'absolute',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: 'transparent'
+    },
+    btn: {
+      
     }
+
   });

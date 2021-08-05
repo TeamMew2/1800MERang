@@ -22,8 +22,6 @@ router.get('/', function(req, res, next) {
       .then(result => res.status(200).send(JSON.stringify({phone_number: result})))
   })
   
-
-   
   // firebase.db.collection("companies").add({
   //    companyName: company,
   //  })
@@ -33,6 +31,7 @@ router.get('/', function(req, res, next) {
   //  .catch((error) => {
   //   res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
   //  });
+
 })
 
 
