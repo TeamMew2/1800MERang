@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect} from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
-import { Heading, Input, Button } from 'native-base';
+import { Keyboard, StyleSheet, Text, View, Alert } from "react-native";
+import { Heading, Input, Button, Spinner, Center } from 'native-base';
 import { flex } from "styled-system";
 import Contact from "./Contact";
 import * as Location from 'expo-location';
@@ -13,12 +13,15 @@ export default function Search() {
   const titleText = "Find service desk fast";
   const subtitleText = "and get the help you need.";
   const [text, setText] = useState("");
+  const [contactCompany, setContactCompany] = useState("");
   const [number, setNumber] = useState("")
   const [resultFlag,setresultFlag] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   let currentNum;
 
   useEffect(() => {
@@ -43,7 +46,7 @@ export default function Search() {
   }
 
   if(number) {
-    currentNum = <Contact text={text} number={number}/>   
+    currentNum = <Contact text={contactCompany} number={number}/>   
   }
 
 
@@ -71,6 +74,9 @@ export default function Search() {
         />
         <Button
           onPress={() => {
+            Keyboard.dismiss();
+            setButtonDisabled(true);
+            setIsLoading(true);
             fetch(`http://192.168.1.185:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
             .then(res => {
              console.log('res', res)
@@ -78,12 +84,18 @@ export default function Search() {
             })
             .then(res => {
               setresultFlag(true);
-              console.log(res.phone_number)
-              setNumber(res.phone_number)
+              console.log(res.phone_number);
+              setNumber(res.phone_number);
+              setContactCompany(text);
+              setText('');
             })
             .catch(err => {
               console.log(err.message)
               throw err
+            })
+            .finally(() => {
+              setIsLoading(false);
+              setButtonDisabled(false);
             })
           }}
           disabled={buttonDisabled}
@@ -93,6 +105,7 @@ export default function Search() {
         >
           Search
         </Button>
+        {isLoading && <Spinner style={{margin: 50}} />}
         {currentNum}
             
       </View>            
