@@ -44,7 +44,7 @@ export default function Contact(props) {
         title='Call'        
         // style={styles.phone}
         // source={require("../assets/phone_icon.png")}
-        onPress={dialCall.bind(props.number)}
+        onPress={()=>Linking.openURL(`telprompt:${props.number}`)}
         />
       
     </View>
