@@ -16,6 +16,7 @@ export default function Search() {
   const [number, setNumber] = useState("")
   const [resultText,setresultText] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [userID, setUserID] = useState('ayemmoe');
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -27,8 +28,7 @@ export default function Search() {
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         return;
-      }
-
+      }      
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
@@ -43,7 +43,7 @@ export default function Search() {
   }
 
   if(number) {
-    currentNum = <Contact text={resultText} number={number}/>   
+    currentNum = <Contact text={resultText} number={number} user={userID}/>   
   }
 
 

@@ -1,28 +1,71 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Switch,Image,Button, TouchableOpacity} from "react-native";
 import { height } from "styled-system";
 import {Linking,Platform} from 'react-native'
-
+// import * as RNFS from 'react-native-fs';
+import * as FileSystem from 'expo-file-system';
 
 export default function Contact(props) {
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const form = {isFavourite: false}
+  const [form, setForm] = useState({})
   const [isEnabled, setIsEnabled] = useState(false);
  
   const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState)
+    console.log('isEnabled first time', isEnabled)
+    setIsEnabled(!isEnabled)
+    // setTimeout(
+    //   () => { console.log('waiting') },
+    //   3000
+    // )
+
+    console.log('isEnabled', isEnabled)
+    if(isEnabled) {
+      const data = {
+        number:props.number,
+        company:props.text
+      };
+
+      console.log('isEnable',isEnabled)     
+      console.log('writing to file ',data)
+      // FileSystem.writeAsStringAsync('../testData/fav.json',data,FileSystem.EncodingType.UTF8)
+      // .then(res => {
+      //   console.log(res);
+      // })
+      // .catch(err => {
+      //   console.log(err.message,err.code);
+      // })
+      
+    }
   }
+
+  useEffect(() => {
+    if(isEnabled) {
+      const data = {
+        number:props.number,
+        company:props.text
+      };
+
+      console.log('isEnable',isEnabled)     
+      console.log('writing to file ',data)
+      // FileSystem.writeAsStringAsync('../testData/fav.json',data,FileSystem.EncodingType.UTF8)
+      // .then(res => {
+      //   console.log(res);
+      // })
+      // .catch(err => {
+      //   console.log(err.message,err.code);
+      // })
+      
+    }
+  }, []);
 
   const dialCall = (number) => {               
     console.log('dailing',number)
     let phoneNumber = '';
     if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
     else {phoneNumber = `telprompt:${number}`; }
-    Linking.openURL(phoneNumber);
-    //setNumber('')
-    
- };
+    Linking.openURL(phoneNumber);  
+  };
 
   return (
     <View style={styles.container}>
@@ -41,9 +84,7 @@ export default function Contact(props) {
       <Text style={styles.number}>{props.number}</Text>      
       
       <Button
-        title='Call'        
-        // style={styles.phone}
-        // source={require("../assets/phone_icon.png")}
+        title='Call'  
         onPress={() => dialCall(props.number)}
         /> 
       
@@ -56,9 +97,7 @@ export default function Contact(props) {
         style={styles.phone}
         onPress={() => dialCall(props.number)}
         />
-    </TouchableOpacity> */}
-
-      
+    </TouchableOpacity> */}      
     </View>
   );
 }
