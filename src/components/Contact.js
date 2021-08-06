@@ -20,9 +20,7 @@ export default function Contact(props) {
     if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
     else {phoneNumber = `telprompt:${number}`; }
     Linking.openURL(phoneNumber);
-    //setNumber('')
-    
- };
+  };
 
   return (
     <View style={styles.container}>
@@ -42,10 +40,8 @@ export default function Contact(props) {
       
       <Button
         title='Call'        
-        // style={styles.phone}
-        // source={require("../assets/phone_icon.png")}
-        onPress={dialCall.bind(props.number)}
-        />
+        onPress={()=>Linking.openURL(`telprompt:${props.number}`)}
+      />
       
     </View>
   );

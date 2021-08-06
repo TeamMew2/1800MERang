@@ -46,21 +46,19 @@ export default function App() {
 
           <View style={styles.nav}>
             <Link
-              to="/signin"
+              to="/signin" // [Xiao] TODO: this signin page is temp and broken
               style={styles.navItem}
               underlayColor="#f0f4f7">
               <AntDesign name="home" size={24} color="black" />
             </Link>
-            <Link
-              to="/search"
-              style={styles.navItem}
-              underlayColor="#f0f4f7">
+            <Link to="/search" style={styles.navItem} underlayColor="#f0f4f7">
               <AntDesign name="search1" size={24} color="black" />
             </Link>
             <Link
               to="/favorites"
               style={styles.navItem}
-              underlayColor="#f0f4f7">
+              underlayColor="#f0f4f7"
+            >
               <AntDesign name="hearto" size={24} color="black" />
             </Link>
           </View>
