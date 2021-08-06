@@ -10,8 +10,10 @@ dotenv.config();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-  const { company, lat, lng } = req.query   
-  console.log(company, lat, lng)  
+  const { company, lat, lng } = req.query 
+  console.log('company',company)
+  console.log(company, lat, lng)
+  console.log(process.env.AYE_APP)
   console.log("URL ", "https://maps.googleapis.com/maps/api/place/textsearch/json?query=",company,"&location=",lng,",",lat,"&",process.env.AYE_APP)
 
   fetch(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${company}&location=${lng},${lat}&radius=10000&key=${process.env.AYE_APP}`)
@@ -37,6 +39,23 @@ router.get('/', function(req, res, next) {
   //  });
 
 })
+
+// router.get('/fav', function(req, res, next) {
+//   console.log('request',req)
+//   const { companyName, userId, phoneNumber } = req.query   
+//    firebase.db.collection("favorites").add({
+//       companyName: companyName,
+//       userId: userId,
+//       phoneNumber: phoneNumber
+//     })
+//     .then((docRef) => {
+//      res.status(200).send(JSON.stringify({message: `Document written with ID: ${docRef.id}`}));
+//     })
+//     .catch((error) => {
+//      res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
+//     });
+// });
+
 
 // same route using async await and axios
 // router.get('/search', async function (req, res, next) {

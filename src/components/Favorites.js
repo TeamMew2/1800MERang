@@ -7,6 +7,7 @@ import { Feather } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 
 export default function Favorites() {
+  const [userID, setUserID] = useState('ayemmoe');
   return (
     <View style={styles.container}>
       <Heading size="xl" paddingBottom="1">Favorites</Heading>

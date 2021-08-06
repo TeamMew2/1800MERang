@@ -16,6 +16,7 @@ export default function Search() {
   const [number, setNumber] = useState("")
   const [resultText,setresultText] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [userID, setUserID] = useState('ayemmoe');
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -45,7 +46,7 @@ export default function Search() {
   }
 
   if(number) {
-    currentNum = <Contact text={contactCompany} number={number}/>   
+    currentNum = <Contact text={contactCompany} number={number} userID={userID}/>   
   }
 
 
@@ -79,13 +80,13 @@ export default function Search() {
             Keyboard.dismiss();
             setButtonDisabled(true);
             setIsLoading(true);
-            fetch(`http://192.168.1.185:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
+            fetch(`http://192.168.181.128:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
             .then(res => {
              console.log('res', res)
              return res.json()
             })
             .then(res => {
-              setresultFlag(true);
+              setIsLoading(false);
               console.log(res.phone_number);
               setNumber(res.phone_number);
               setContactCompany(text);
@@ -120,9 +121,7 @@ export default function Search() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "#fff",
-      // alignItems: "flex-start",
-      // justifyContent: "flex-start",
+      backgroundColor: "#fff",      
     },
     header: {
       paddingTop: 100,

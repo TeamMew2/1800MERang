@@ -1,25 +1,48 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Switch,Image,Button} from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, Switch,Image,Button, TouchableOpacity} from "react-native";
 import { height } from "styled-system";
-import {Linking,Platform} from 'react-native'
-
+import {Linking,Platform} from 'react-native';
+import * as FileSystem from 'expo-file-system';
 
 export default function Contact(props) {
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const form = {isFavourite: false}
+  const [form, setForm] = useState({})
   const [isEnabled, setIsEnabled] = useState(false);
  
-  const toggleSwitch = () => {
-    setIsEnabled(previousState => !previousState)
+  const toggleSwitch = () => {    
+    setIsEnabled(
+    previousState => !previousState
+    );    
+  }  
+
+  useEffect(() => {
+  if(isEnabled) {
+    const data = {
+      number:props.number,
+      company:props.text,
+      userID: props.userID
+    };
+
+    
+    fetch(`http://192.168.181.128:3000/favorites/?companyName=${props.text}&phoneNumber=${props.number}&userId=${props.userID}`)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+      })
+      .then(err => {
+        console.log(err)
+      })
+
   }
+  }, [isEnabled]);
 
   const dialCall = (number) => {               
     console.log('dailing',number)
     let phoneNumber = '';
     if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
     else {phoneNumber = `telprompt:${number}`; }
-    Linking.openURL(phoneNumber);
+    Linking.openURL(phoneNumber);  
   };
 
   return (
@@ -39,10 +62,10 @@ export default function Contact(props) {
       <Text style={styles.number}>{props.number}</Text>      
       
       <Button
-        title='Call'        
-        onPress={()=>Linking.openURL(`telprompt:${props.number}`)}
-      />
-      
+        title='Call'  
+        onPress={() => dialCall(props.number)}
+        /> 
+        
     </View>
   );
 }
