@@ -28,26 +28,33 @@ router.get('/', function(req, res, next) {
       .then(result => res.status(200).send(JSON.stringify({phone_number: result})))
   })
   
+  // firebase.db.collection("companies").add({
+  //    companyName: company,
+  //  })
+  //  .then((docRef) => {
+  //   res.status(200).send(JSON.stringify({message: `Document written with ID: ${docRef.id}`}));
+  //  })
+  //  .catch((error) => {
+  //   res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
+  //  });
 
-   
-  
 })
 
-router.get('/fav', function(req, res, next) {
-  console.log('request',req)
-  const { companyName, userId, phoneNumber } = req.query   
-   firebase.db.collection("favorites").add({
-      companyName: companyName,
-      userId: userId,
-      phoneNumber: phoneNumber
-    })
-    .then((docRef) => {
-     res.status(200).send(JSON.stringify({message: `Document written with ID: ${docRef.id}`}));
-    })
-    .catch((error) => {
-     res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
-    });
-});
+// router.get('/fav', function(req, res, next) {
+//   console.log('request',req)
+//   const { companyName, userId, phoneNumber } = req.query   
+//    firebase.db.collection("favorites").add({
+//       companyName: companyName,
+//       userId: userId,
+//       phoneNumber: phoneNumber
+//     })
+//     .then((docRef) => {
+//      res.status(200).send(JSON.stringify({message: `Document written with ID: ${docRef.id}`}));
+//     })
+//     .catch((error) => {
+//      res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
+//     });
+// });
 
 
 // same route using async await and axios

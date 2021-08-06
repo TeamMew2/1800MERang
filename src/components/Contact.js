@@ -25,7 +25,7 @@ export default function Contact(props) {
     };
 
     
-    fetch(`http://192.168.181.128:3000/fav/?company=${props.text}&phone_number=${props.number}&userID=${props.userID}`)
+    fetch(`http://192.168.181.128:3000/favorites/?companyName=${props.text}&phoneNumber=${props.number}&userId=${props.userID}`)
       .then(res => res.json())
       .then(res => {
         console.log(res)
@@ -65,17 +65,7 @@ export default function Contact(props) {
         title='Call'  
         onPress={() => dialCall(props.number)}
         /> 
-      
-      {/* <TouchableOpacity style={styles.btn} >
-        <View style={styles.absoluteView}>
-            <Text>title</Text>
-        </View>
-        <Image 
-        source={require("../assets/phone_icon.png")}  
-        style={styles.phone}
-        onPress={() => dialCall(props.number)}
-        />
-    </TouchableOpacity> */}      
+        
     </View>
   );
 }
@@ -104,16 +94,5 @@ const styles = StyleSheet.create({
       height: 30,
       width: 30,
       paddingBottom: 20,    
-    },
-    absoluteView: {
-      flex: 1,
-      position: 'absolute',
-      alignItems: 'center',
-      justifyContent: 'center',
-      backgroundColor: 'transparent'
-    },
-    btn: {
-      
     }
-
   });
