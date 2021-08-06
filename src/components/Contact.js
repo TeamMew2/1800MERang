@@ -2,8 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Switch,Image,Button, TouchableOpacity} from "react-native";
 import { height } from "styled-system";
-import {Linking,Platform} from 'react-native'
-// import * as RNFS from 'react-native-fs';
+import {Linking,Platform} from 'react-native';
 import * as FileSystem from 'expo-file-system';
 
 export default function Contact(props) {
@@ -11,53 +10,32 @@ export default function Contact(props) {
   const [form, setForm] = useState({})
   const [isEnabled, setIsEnabled] = useState(false);
  
-  const toggleSwitch = () => {
-    console.log('isEnabled first time', isEnabled)
-    setIsEnabled(!isEnabled)
-    // setTimeout(
-    //   () => { console.log('waiting') },
-    //   3000
-    // )
-
-    console.log('isEnabled', isEnabled)
-    if(isEnabled) {
-      const data = {
-        number:props.number,
-        company:props.text
-      };
-
-      console.log('isEnable',isEnabled)     
-      console.log('writing to file ',data)
-      // FileSystem.writeAsStringAsync('../testData/fav.json',data,FileSystem.EncodingType.UTF8)
-      // .then(res => {
-      //   console.log(res);
-      // })
-      // .catch(err => {
-      //   console.log(err.message,err.code);
-      // })
-      
-    }
-  }
+  const toggleSwitch = () => {    
+    setIsEnabled(
+    previousState => !previousState
+    );    
+  }  
 
   useEffect(() => {
     if(isEnabled) {
       const data = {
         number:props.number,
-        company:props.text
+        company:props.text,
+        userID: props.userID
       };
 
-      console.log('isEnable',isEnabled)     
-      console.log('writing to file ',data)
-      // FileSystem.writeAsStringAsync('../testData/fav.json',data,FileSystem.EncodingType.UTF8)
-      // .then(res => {
-      //   console.log(res);
-      // })
-      // .catch(err => {
-      //   console.log(err.message,err.code);
-      // })
       
+      fetch(`http://192.168.181.128:3000/fav/?company=${props.text}&phone_number=${props.number}&userID=${props.userID}`)
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+        })
+        .then(err => {
+          console.log(err)
+        })
+
     }
-  }, []);
+  }, [isEnabled]);
 
   const dialCall = (number) => {               
     console.log('dailing',number)

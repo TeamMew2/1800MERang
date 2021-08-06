@@ -1,11 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect} from "react";
-import { StyleSheet, Text, View, ScrollView,Alert, TextInput } from "react-native";
-import { Heading, Input, Button } from 'native-base';
+import { Keyboard, ScrollView, StyleSheet, Text, TextInput, View, Alert } from "react-native";
+import { Heading, Input, Button, Spinner } from 'native-base';
 import { flex } from "styled-system";
 import Contact from "./Contact";
 import * as Location from 'expo-location';
-
 
 
 export default function Search() {
@@ -13,6 +12,7 @@ export default function Search() {
   const titleText = "Find service desk fast";
   const subtitleText = "and get the help you need.";
   const [text, setText] = useState("");
+  const [contactCompany, setContactCompany] = useState("");
   const [number, setNumber] = useState("")
   const [resultText,setresultText] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -20,6 +20,8 @@ export default function Search() {
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   let currentNum;
 
   useEffect(() => {
@@ -28,8 +30,9 @@ export default function Search() {
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         return;
-      }      
-      let location = await Location.getCurrentPositionAsync({});
+      }
+
+      let location = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.Balanced, });
       setLocation(location);
     })();
   }, []);
@@ -43,7 +46,7 @@ export default function Search() {
   }
 
   if(number) {
-    currentNum = <Contact text={resultText} number={number} user={userID}/>   
+    currentNum = <Contact text={contactCompany} number={number} userID={userID}/>   
   }
 
 
@@ -74,21 +77,29 @@ export default function Search() {
         />
         <Button
           onPress={() => {
-            if(location){
-              fetch(`http://192.168.181.128:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
-              .then(res => {              
-              return res.json()
-              })
-              .then(res => {
-                setresultText(text);
-                setText('')
-                setNumber(res.phone_number)
-              })
-              .catch(err => {
-                console.log(err.message)
-                throw err
-              })
-            }
+            Keyboard.dismiss();
+            setButtonDisabled(true);
+            setIsLoading(true);
+            fetch(`http://192.168.181.128:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
+            .then(res => {
+             console.log('res', res)
+             return res.json()
+            })
+            .then(res => {
+              setIsLoading(false);
+              console.log(res.phone_number);
+              setNumber(res.phone_number);
+              setContactCompany(text);
+              setText('');
+            })
+            .catch(err => {
+              console.log(err.message)
+              throw err
+            })
+            .finally(() => {
+              setIsLoading(false);
+              setButtonDisabled(false);
+            })
           }}
           disabled={buttonDisabled}
           backgroundColor="#00989d"
@@ -97,6 +108,7 @@ export default function Search() {
         >
           Search
         </Button>
+        {isLoading && <Spinner style={{margin: 50}} />}
         {currentNum}
             
       </View>            
@@ -109,9 +121,7 @@ export default function Search() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "#fff",
-      // alignItems: "flex-start",
-      // justifyContent: "flex-start",
+      backgroundColor: "#fff",      
     },
     header: {
       paddingTop: 100,
