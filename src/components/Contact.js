@@ -17,24 +17,24 @@ export default function Contact(props) {
   }  
 
   useEffect(() => {
-    if(isEnabled) {
-      const data = {
-        number:props.number,
-        company:props.text,
-        userID: props.userID
-      };
+  if(isEnabled) {
+    const data = {
+      number:props.number,
+      company:props.text,
+      userID: props.userID
+    };
 
-      
-      fetch(`http://192.168.181.128:3000/fav/?company=${props.text}&phone_number=${props.number}&userID=${props.userID}`)
-        .then(res => res.json())
-        .then(res => {
-          console.log(res)
-        })
-        .then(err => {
-          console.log(err)
-        })
+    
+    fetch(`http://192.168.181.128:3000/fav/?company=${props.text}&phone_number=${props.number}&userID=${props.userID}`)
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+      })
+      .then(err => {
+        console.log(err)
+      })
 
-    }
+  }
   }, [isEnabled]);
 
   const dialCall = (number) => {               

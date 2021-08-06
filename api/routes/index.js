@@ -33,20 +33,21 @@ router.get('/', function(req, res, next) {
   
 })
 
-router.get('/fav', function(req,res,next){
-  const {company,phone_number,userID} = req.query;
-  firebase.db.collection("favorites").add({
-    companyName: company,
-    phone_number: phone_number,
-    user: userID
-  })
-  .then((docRef) => {
-   res.status(200).send(JSON.stringify({message: `Document written with ID: ${docRef.id}`}));
-  })
-  .catch((error) => {
-   res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
-  });
-})
+router.get('/fav', function(req, res, next) {
+  console.log('request',req)
+  const { companyName, userId, phoneNumber } = req.query   
+   firebase.db.collection("favorites").add({
+      companyName: companyName,
+      userId: userId,
+      phoneNumber: phoneNumber
+    })
+    .then((docRef) => {
+     res.status(200).send(JSON.stringify({message: `Document written with ID: ${docRef.id}`}));
+    })
+    .catch((error) => {
+     res.status(400).send(JSON.stringify({message: `Error adding document: ${error}`}));
+    });
+});
 
 
 // same route using async await and axios
