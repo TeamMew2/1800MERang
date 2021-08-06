@@ -32,7 +32,7 @@ export default function Search() {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
-  }, [location]);
+  }, []);
 
   let status = 'Waiting..';
   if (errorMsg) {
@@ -75,11 +75,14 @@ export default function Search() {
         <Button
           onPress={() => {
             if(location){
-              fetch(`http://192.168.181.128:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
-              .then(res => {              
+              console.log('HELLO')
+              fetch(`http://192.168.1.221:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
+              .then(res => {         
+                  
               return res.json()
               })
               .then(res => {
+                console.log(res) 
                 setresultText(text);
                 setText('')
                 setNumber(res.phone_number)
