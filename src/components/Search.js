@@ -9,7 +9,7 @@ import * as Location from 'expo-location';
 
 export default function Search() {
   const placeholderText = "Search Company Name";
-  const titleText = "Find service desk fast";
+  const titleText = "Find service desk";
   const subtitleText = "and get the help you need.";
   const [text, setText] = useState("");
   const [contactCompany, setContactCompany] = useState("");
