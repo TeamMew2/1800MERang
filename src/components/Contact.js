@@ -73,12 +73,15 @@ export default function Contact(props) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      width : "80%",
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "space-between",
       flexDirection:'row', 
       marginTop: 50,     
       padding: 10,
+      // boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
+      // transition: "0.3s",
     },
     name: {      
       color: '#FF0000',
