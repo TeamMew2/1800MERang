@@ -2,7 +2,7 @@ import { Row } from "native-base";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity} from "react-native";
 import {Linking,Platform} from 'react-native';
-import { height, width } from "styled-system";
+
 
 
 export default function Fav(props) {
@@ -15,6 +15,16 @@ export default function Fav(props) {
     Linking.openURL(phoneNumber);  
   };
 
+  const removeFav = (item) => {
+    fetch(`http://192.168.181.128:3000/removeFav/?id=${item}`)
+    .then(res => res.json())
+    .then(res => {
+      console.log(res);
+    })
+    .then(err => {
+      console.log(err)
+    }) 
+  }
 
   return (
     <View style={styles.fav}>
@@ -23,6 +33,7 @@ export default function Fav(props) {
         <TouchableOpacity
           underlayColor='#fff'
           style = {styles.deleteButton}
+          onPress = {() => removeFav(props.ID)}
         >
           <Image style={styles.deleteText} 
           source={require("../assets/remove.jpg")}
@@ -52,8 +63,8 @@ const styles = StyleSheet.create({
     width : "90%",    
     backgroundColor: "#fff",    
     justifyContent: "space-between",    
-    marginTop: 10,
-    marginBottom: 10,      
+    marginTop: 5,
+    marginBottom: 5,      
     
   },
 
@@ -62,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingBottom: 10,
+    marginTop: 5,
     
   },
 

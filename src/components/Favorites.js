@@ -26,7 +26,7 @@ export default function Favorites() {
           let count = 0;
           for (var key in resultObj) {
             console.log(key, resultObj[key].phoneNumber, resultObj[key].companyName)
-            resultArr.push(<Fav key={count} number={resultObj[key].phoneNumber} company={resultObj[key].companyName} />)
+            resultArr.push(<Fav key={count} number={resultObj[key].phoneNumber} company={resultObj[key].companyName} ID={key} />)
             count ++;
           }
         }

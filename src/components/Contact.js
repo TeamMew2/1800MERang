@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Switch,Button} from "react-native";
+import { StyleSheet, View, Text, Switch,Image, TouchableOpacity} from "react-native";
+import { Button } from "native-base";
+import { height } from "styled-system";
 import {Linking,Platform} from 'react-native';
-
+import * as FileSystem from 'expo-file-system';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 export default function Contact(props) {
   const [isEnabled, setIsEnabled] = useState(false);
  
-  const toggleSwitch = () => {    
+  const toggleFavorite = () => {    
     setIsEnabled(
     previousState => !previousState
     );    
@@ -42,41 +45,55 @@ export default function Contact(props) {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text>Favorite</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-          style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }}
-        />
+    <View>
+      <View style={styles.upperContainer}>
+        <Text style={styles.name} style={{color: '#00989d', fontSize: 25}}>{props.text}</Text>        
+        <View>
+          
+        </View>
+          
       </View>
-      <Text style={styles.name}>{props.text}</Text>
-      <Text style={styles.number}>{props.number}</Text>      
-      
-      <Button
-        title='Call'  
-        onPress={() => dialCall(props.number)}
-        /> 
+      <View style={styles.lowerContainer}>
+        <Button variant="none" onPress={toggleFavorite}>
+          <FontAwesome name={isEnabled ? "star" : "star-o"} size={50} color={"#00989d"} />
+        </Button>
+        <FontAwesome name="phone" size={50} color="#00989d" />
         
+        <Button
+          onPress={() => dialCall(props.number)}
+          backgroundColor="white"
+          style={{borderColor: "#00989d", height: 50}}
+          variant="outline"
+          >
+          <Text style={{color: "#00989d"}}>{props.number}</Text>
+        </Button>
+            {/* <Text style={styles.number}>{props.number}</Text>     */}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      width : "85%",
-      flexDirection:'row',
+    upperContainer: {
+      flex: 1,      
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "space-between",  
+      paddingTop: 20
       
     },
-    name: {      
+    lowerContainer: {
+      flex: 1,
+      // width : "80%",
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "space-between",
+      flexDirection:'row', 
+      // marginTop: 50,     
+      padding: 10,
+    },
+    name: {
+      fontSize: 15,      
       color: '#FF0000',
       
     },
