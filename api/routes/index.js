@@ -20,6 +20,7 @@ router.get('/', function(req, res, next) {
   .then(result => result.json())
   .catch(err => console.log(err))
   .then(result => {
+      // console.log(result.results[0])
       fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${result.results[0].place_id}&key=${process.env.AYE_APP}`)
       .then(result => result.json())
       .then(result => {

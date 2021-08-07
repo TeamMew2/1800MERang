@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Switch,Image, TouchableOpacity} from "react-native";
 import { Button } from "native-base";
@@ -8,8 +7,6 @@ import * as FileSystem from 'expo-file-system';
 import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 export default function Contact(props) {
-  const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [form, setForm] = useState({})
   const [isEnabled, setIsEnabled] = useState(false);
  
   const toggleFavorite = () => {    
@@ -52,33 +49,25 @@ export default function Contact(props) {
       <View style={styles.upperContainer}>
         <Text style={styles.name} style={{color: '#00989d', fontSize: 25}}>{props.text}</Text>        
         <View>
-          {/* <Text></Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "#00989d" }}
-            thumbColor={"white"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={isEnabled}
-            style={{ transform: [{ scaleX: 1 }, { scaleY: 1 }] }}
-          /> */}
+          
         </View>
           
       </View>
       <View style={styles.lowerContainer}>
         <Button variant="none" onPress={toggleFavorite}>
-          <FontAwesome name={isEnabled ? "star" : "star-o"} size={50} color={"#00989d"} />
+          <FontAwesome name={isEnabled ? "star" : "star-o"} size={40} color={"#00989d"} />
         </Button>
-        <FontAwesome name="phone" size={50} color="#00989d" />
-        
         <Button
           onPress={() => dialCall(props.number)}
           backgroundColor="white"
-          style={{borderColor: "#00989d", height: 50}}
-          variant="outline"
+          style={{borderColor: "#00989d"}}
+          variant="none"
           >
-          <Text style={{color: "#00989d"}}>{props.number}</Text>
+          <Text style={{color: "#00989d", fontSize: 15}}>{props.number}</Text>
         </Button>
-            {/* <Text style={styles.number}>{props.number}</Text>     */}
+        <Button variant="none" onPress={() => dialCall(props.number)}>        
+          <FontAwesome name="phone" size={40} color="#00989d" />
+        </Button>
       </View>
     </View>
   );
@@ -86,16 +75,12 @@ export default function Contact(props) {
 
 const styles = StyleSheet.create({
     upperContainer: {
-      flex: 1,
-      // width : "80%",
+      flex: 1,      
       backgroundColor: "#fff",
       alignItems: "center",
-      justifyContent: "space-between",
-      flexDirection:'row', 
-      marginTop: 50,     
-      padding: 10,
-      // boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
-      // transition: "0.3s",
+      justifyContent: "space-between",  
+      paddingTop: 20
+      
     },
     lowerContainer: {
       flex: 1,

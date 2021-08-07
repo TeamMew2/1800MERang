@@ -122,7 +122,8 @@ export default function Search() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "#fff",      
+      backgroundColor: "#fff",   
+      width: '90%'   
     },
     header: {
       paddingTop: 100,
