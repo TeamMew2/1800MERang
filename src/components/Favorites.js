@@ -13,25 +13,59 @@ export default function Favorites() {
   const [userID, setUserID] = useState('ayemmoe');
   const [userData, setUserData] = useState([]);
 
-  
-
-  useEffect(() => {          
-    fetch(`http://192.168.181.128:3000/userFavorites`)
+  const removeFav = (item) => {
+    fetch(`http://192.168.181.128:3000/removeFav/?id=${item}`)
+    .then(res => res.json())
+    .then(res => {
+       console.log('userData',userData);
+       fetch(`http://192.168.181.128:3000/userFavorites`)
       .then(res => res.json())
       .then(res => {
-        console.log(res);
+        
         const resultArr = [];
 
         const returnData = (resultObj) => {
           let count = 0;
           for (var key in resultObj) {
-            console.log(key, resultObj[key].phoneNumber, resultObj[key].companyName)
-            resultArr.push(<Fav key={count} number={resultObj[key].phoneNumber} company={resultObj[key].companyName} ID={key} />)
+            // console.log(key, resultObj[key].phoneNumber, resultObj[key].companyName)
+            resultArr.push(<Fav key={count} number={resultObj[key].phoneNumber} company={resultObj[key].companyName} ID={key} removeFav={removeFav}/>)
             count ++;
           }
         }
 
         console.log(resultArr)
+        returnData(res);      
+          
+        
+        setUserData(resultArr);
+      })
+      .then(err => {
+        console.log(err)
+      }) 
+       
+    })
+    .then(err => {
+      console.log(err)
+    }) 
+  }
+
+  useEffect(() => {          
+    fetch(`http://192.168.181.128:3000/userFavorites`)
+      .then(res => res.json())
+      .then(res => {
+        
+        const resultArr = [];
+
+        const returnData = (resultObj) => {
+          let count = 0;
+          for (var key in resultObj) {
+            // console.log(key, resultObj[key].phoneNumber, resultObj[key].companyName)
+            resultArr.push(<Fav key={count} number={resultObj[key].phoneNumber} company={resultObj[key].companyName} ID={key} removeFav={removeFav}/>)
+            count ++;
+          }
+        }
+
+        
         returnData(res);      
           
         

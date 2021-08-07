@@ -15,16 +15,7 @@ export default function Fav(props) {
     Linking.openURL(phoneNumber);  
   };
 
-  const removeFav = (item) => {
-    fetch(`http://192.168.181.128:3000/removeFav/?id=${item}`)
-    .then(res => res.json())
-    .then(res => {
-      console.log(res);
-    })
-    .then(err => {
-      console.log(err)
-    }) 
-  }
+  
 
   return (
     <View style={styles.fav}>
@@ -33,7 +24,7 @@ export default function Fav(props) {
         <TouchableOpacity
           underlayColor='#fff'
           style = {styles.deleteButton}
-          onPress = {() => removeFav(props.ID)}
+          onPress = {() => props.removeFav(props.ID)}
         >
           <Image style={styles.deleteText} 
           source={require("../assets/remove.jpg")}
