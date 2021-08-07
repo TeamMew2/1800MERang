@@ -5,7 +5,6 @@ import { NativeRouter, Route, Link } from "react-router-native";
 import Home from "./components/Home";
 import Search from "./components/Search";
 import Favorites from "./components/Favorites";
-import SignIn from './Auth/SignIn'
 import { AntDesign } from '@expo/vector-icons'; 
 import { NativeBaseProvider } from 'native-base';
 import * as Location from 'expo-location';

@@ -2,4 +2,4 @@
 .DS_Store
 node_modules
 .env
-firebase.js
+firebase-service-account.json

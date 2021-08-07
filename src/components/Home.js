@@ -89,10 +89,10 @@ export default function Home() {
                 />
             </View>
           <Pressable style={styles.button} onPress={()=>handleSubmit()}>
-            <Text style={{ fontSize: '15px', color: 'white'}}>Submit</Text>
+            <Text style={{ fontSize: '15', color: 'white'}}>Submit</Text>
           </Pressable>
           <Pressable style={styles.button}  onPress={() => {setSignIn(!signIn)}}>
-            <Text style={{ fontSize:'15px', color: 'white'}}>{selector}</Text>
+            <Text style={{ fontSize:'15', color: 'white'}}>{selector}</Text>
           </Pressable>
         </View>
     </TouchableWithoutFeedback>
