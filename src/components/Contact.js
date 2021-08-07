@@ -79,7 +79,6 @@ export default function Contact(props) {
         <Button variant="none" onPress={() => dialCall(props.number)}>        
           <FontAwesome name="phone" size={40} color="#00989d" />
         </Button>
-            {/* <Text style={styles.number}>{props.number}</Text>     */}
       </View>
     </View>
   );
