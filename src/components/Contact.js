@@ -55,19 +55,19 @@ export default function Contact(props) {
       </View>
       <View style={styles.lowerContainer}>
         <Button variant="none" onPress={toggleFavorite}>
-          <FontAwesome name={isEnabled ? "star" : "star-o"} size={50} color={"#00989d"} />
+          <FontAwesome name={isEnabled ? "star" : "star-o"} size={40} color={"#00989d"} />
         </Button>
-        <FontAwesome name="phone" size={50} color="#00989d" />
-        
         <Button
           onPress={() => dialCall(props.number)}
           backgroundColor="white"
-          style={{borderColor: "#00989d", height: 50}}
-          variant="outline"
+          style={{borderColor: "#00989d"}}
+          variant="none"
           >
-          <Text style={{color: "#00989d"}}>{props.number}</Text>
+          <Text style={{color: "#00989d", fontSize: 15}}>{props.number}</Text>
         </Button>
-            {/* <Text style={styles.number}>{props.number}</Text>     */}
+        <Button variant="none" onPress={() => dialCall(props.number)}>        
+          <FontAwesome name="phone" size={40} color="#00989d" />
+        </Button>
       </View>
     </View>
   );
