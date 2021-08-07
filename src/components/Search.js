@@ -80,7 +80,7 @@ export default function Search() {
             Keyboard.dismiss();
             setButtonDisabled(true);
             setIsLoading(true);
-            fetch(`http://192.168.1.185:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
+            fetch(`http://192.168.181.128:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
             .then(res => {
              console.log('res', res)
              return res.json()
@@ -122,7 +122,8 @@ export default function Search() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "#fff",      
+      backgroundColor: "#fff",   
+      width: '90%'   
     },
     header: {
       paddingTop: 100,
