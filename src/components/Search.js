@@ -80,14 +80,14 @@ export default function Search() {
             Keyboard.dismiss();
             setButtonDisabled(true);
             setIsLoading(true);
-            fetch(`http://192.168.1.221:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
+            fetch(`http://192.168.181.128:3000/?company=${text}&lat=${location.coords.latitude}&lng=${location.coords.longitude}`)
             .then(res => {
-             console.log('res', res)
+            //  console.log('res', res)
              return res.json()
             })
             .then(res => {
               setIsLoading(false);
-              console.log(res.phone_number);
+              // console.log(res.phone_number);
               setNumber(res.phone_number);
               setContactCompany(res.name);
               setText('');

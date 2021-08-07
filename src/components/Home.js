@@ -89,10 +89,10 @@ export default function Home() {
                 />
             </View>
           <Pressable style={styles.button} onPress={()=>handleSubmit()}>
-            <Text style={{ fontSize: '15', color: 'white'}}>Submit</Text>
+            <Text style={{ fontSize: 15, color: '#fff'}}>Submit</Text>
           </Pressable>
           <Pressable style={styles.button}  onPress={() => {setSignIn(!signIn)}}>
-            <Text style={{ fontSize:'15', color: 'white'}}>{selector}</Text>
+            <Text style={{ fontSize:15, color: '#fff'}}>{selector}</Text>
           </Pressable>
         </View>
     </TouchableWithoutFeedback>
@@ -116,16 +116,16 @@ const styles = StyleSheet.create({
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "center",
-      marginTop: 50,
+      marginTop:0,
       padding: 10,
     },
     logo: {
-      height: 500,
-      width: 500,
-      paddingBottom: 20,
+      height: 300,
+      width: 300,
+      paddingBottom: 10,
     },
     title: {
-      fontSize: 30,
+      fontSize: 25,
       fontWeight: "bold",
       color: "#00989d",
     },
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   input: {
       paddingHorizontal: 2,
-      paddingVertical: 5,
+      paddingVertical: 3,
       borderBottomColor: '#ccc',
       borderBottomWidth: 1
   },
