@@ -41,7 +41,6 @@ export default function App() {
           <Route exact path="/" component={Home} />
           <Route path="/search" component={Search} />
           <Route path="/favorites" component={Favorites} />
-          <Route path="/signin" component={SignIn} />
 
           <View style={styles.nav}>
             
