@@ -9,7 +9,7 @@ export default function Home() {
         style={styles.logo}
         source={require("../assets/team-jmexclusives.png")}
         />
-      <Text style={styles.title}>1-800MERANG</Text>
+      <Text style={styles.title}>1-800-MERANG</Text>
     </View>
   );
 }
