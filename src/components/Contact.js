@@ -1,16 +1,18 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Switch,Image,Button, TouchableOpacity} from "react-native";
+import { StyleSheet, View, Text, Switch,Image, TouchableOpacity} from "react-native";
+import { Button } from "native-base";
 import { height } from "styled-system";
 import {Linking,Platform} from 'react-native';
 import * as FileSystem from 'expo-file-system';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 export default function Contact(props) {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [form, setForm] = useState({})
   const [isEnabled, setIsEnabled] = useState(false);
  
-  const toggleSwitch = () => {    
+  const toggleFavorite = () => {    
     setIsEnabled(
     previousState => !previousState
     );    
@@ -46,34 +48,46 @@ export default function Contact(props) {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Text>Favorite</Text>
-        <Switch
-          trackColor={{ false: "#767577", true: "#81b0ff" }}
-          thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-          ios_backgroundColor="#3e3e3e"
-          onValueChange={toggleSwitch}
-          value={isEnabled}
-          style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }}
-        />
+    <View>
+      <View style={styles.upperContainer}>
+        <Text style={styles.name} style={{color: '#00989d', fontSize: 25}}>{props.text}</Text>        
+        <View>
+          {/* <Text></Text>
+          <Switch
+            trackColor={{ false: "#767577", true: "#00989d" }}
+            thumbColor={"white"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={isEnabled}
+            style={{ transform: [{ scaleX: 1 }, { scaleY: 1 }] }}
+          /> */}
+        </View>
+          
       </View>
-      <Text style={styles.name}>{props.text.toUpperCase()}</Text>
-      <Text style={styles.number}>{props.number}</Text>      
-      
-      <Button
-        title='Call'  
-        onPress={() => dialCall(props.number)}
-        /> 
+      <View style={styles.lowerContainer}>
+        <Button variant="none" onPress={toggleFavorite}>
+          <FontAwesome name={isEnabled ? "star" : "star-o"} size={50} color={"#00989d"} />
+        </Button>
+        <FontAwesome name="phone" size={50} color="#00989d" />
         
+        <Button
+          onPress={() => dialCall(props.number)}
+          backgroundColor="white"
+          style={{borderColor: "#00989d", height: 50}}
+          variant="outline"
+          >
+          <Text style={{color: "#00989d"}}>{props.number}</Text>
+        </Button>
+            {/* <Text style={styles.number}>{props.number}</Text>     */}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    upperContainer: {
       flex: 1,
-      width : "80%",
+      // width : "80%",
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "space-between",
@@ -83,7 +97,18 @@ const styles = StyleSheet.create({
       // boxShadow: "0 4px 8px 0 rgba(0,0,0,0.2)",
       // transition: "0.3s",
     },
-    name: {      
+    lowerContainer: {
+      flex: 1,
+      // width : "80%",
+      backgroundColor: "#fff",
+      alignItems: "center",
+      justifyContent: "space-between",
+      flexDirection:'row', 
+      // marginTop: 50,     
+      padding: 10,
+    },
+    name: {
+      fontSize: 15,      
       color: '#FF0000',
       
     },
