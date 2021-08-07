@@ -43,9 +43,11 @@ export default function App() {
           <Route path="/favorites" component={Favorites} />
 
           <View style={styles.nav}>
+            
             <Link to="/" style={styles.navItem} underlayColor="#f0f4f7">
               <AntDesign name="home" size={24} color="black" />
             </Link>
+            
             <Link to="/search" style={styles.navItem} underlayColor="#f0f4f7">
               <AntDesign name="search1" size={24} color="black" />
             </Link>
