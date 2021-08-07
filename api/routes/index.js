@@ -20,10 +20,16 @@ router.get('/', function(req, res, next) {
   .then(result => result.json())
   .catch(err => console.log(err))
   .then(result => {
+      // console.log(result.results[0])
       fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${result.results[0].place_id}&key=${process.env.AYE_APP}`)
       .then(result => result.json())
       .then(result => {
-        return result.result.formatted_phone_number
+        console.log(result.result)
+        const data = {
+          phone_number : result.result.formatted_phone_number,
+          name : result.result.name
+        }
+        return data;
       })
       .then(result => res.status(200).send(JSON.stringify({phone_number: result})))
   })

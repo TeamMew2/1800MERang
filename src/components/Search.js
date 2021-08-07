@@ -87,9 +87,9 @@ export default function Search() {
             })
             .then(res => {
               setIsLoading(false);
-              console.log(res.phone_number);
-              setNumber(res.phone_number);
-              setContactCompany(text);
+              console.log(res.phone_number.phone_number);
+              setNumber(res.phone_number.phone_number);
+              setContactCompany(res.phone_number.name);
               setText('');
             })
             .catch(err => {

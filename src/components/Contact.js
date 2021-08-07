@@ -1,13 +1,9 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, Switch,Image,Button, TouchableOpacity} from "react-native";
-import { height } from "styled-system";
+import { StyleSheet, View, Text, Switch,Button} from "react-native";
 import {Linking,Platform} from 'react-native';
-import * as FileSystem from 'expo-file-system';
+
 
 export default function Contact(props) {
-  const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [form, setForm] = useState({})
   const [isEnabled, setIsEnabled] = useState(false);
  
   const toggleSwitch = () => {    
@@ -58,7 +54,7 @@ export default function Contact(props) {
           style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }}
         />
       </View>
-      <Text style={styles.name}>{props.text.toUpperCase()}</Text>
+      <Text style={styles.name}>{props.text}</Text>
       <Text style={styles.number}>{props.number}</Text>      
       
       <Button
