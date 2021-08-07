@@ -5,6 +5,7 @@ import { NativeRouter, Route, Link } from "react-router-native";
 import Home from "./components/Home";
 import Search from "./components/Search";
 import Favorites from "./components/Favorites";
+import SignIn from './Auth/SignIn'
 import { AntDesign } from '@expo/vector-icons'; 
 import { NativeBaseProvider } from 'native-base';
 import * as Location from 'expo-location';
@@ -41,11 +42,14 @@ export default function App() {
           <Route exact path="/" component={Home} />
           <Route path="/search" component={Search} />
           <Route path="/favorites" component={Favorites} />
+          <Route path="/signin" component={SignIn} />
 
           <View style={styles.nav}>
+            
             <Link to="/" style={styles.navItem} underlayColor="#f0f4f7">
               <AntDesign name="home" size={24} color="black" />
             </Link>
+            
             <Link to="/search" style={styles.navItem} underlayColor="#f0f4f7">
               <AntDesign name="search1" size={24} color="black" />
             </Link>
