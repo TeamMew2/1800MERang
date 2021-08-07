@@ -24,14 +24,10 @@ router.get('/', function(req, res, next) {
       fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${result.results[0].place_id}&key=${process.env.AYE_APP}`)
       .then(result => result.json())
       .then(result => {
-        console.log(result.result)
-        const data = {
-          phone_number : result.result.formatted_phone_number,
-          name : result.result.name
-        }
-        return data;
+
+        return result.result
       })
-      .then(result => res.status(200).send(JSON.stringify({phone_number: result})))
+      .then(result => res.status(200).send(JSON.stringify({phone_number: result.formatted_phone_number, name: result.name})))
   })
   
   // firebase.db.collection("companies").add({

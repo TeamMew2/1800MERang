@@ -7,15 +7,35 @@ import { Feather } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 import Contact from "./Contact";
 import Fav from './Fav';
+import { height } from "styled-system";
 
 export default function Favorites() {
   const [userID, setUserID] = useState('ayemmoe');
+  const [userData, setUserData] = useState([]);
+
+  
 
   useEffect(() => {          
-    fetch(`http://192.168.181.128:3000/userFavorites/?userId=${userID}`)
+    fetch(`http://192.168.181.128:3000/userFavorites`)
       .then(res => res.json())
       .then(res => {
-        console.log(res)
+        console.log(res);
+        const resultArr = [];
+
+        const returnData = (resultObj) => {
+          let count = 0;
+          for (var key in resultObj) {
+            console.log(key, resultObj[key].phoneNumber, resultObj[key].companyName)
+            resultArr.push(<Fav key={count} number={resultObj[key].phoneNumber} company={resultObj[key].companyName} />)
+            count ++;
+          }
+        }
+
+        console.log(resultArr)
+        returnData(res);      
+          
+        
+        setUserData(resultArr);
       })
       .then(err => {
         console.log(err)
@@ -25,8 +45,8 @@ export default function Favorites() {
 
   return (
     <View style={styles.container}>
-      <Heading size="xl" paddingBottom="1">Favorites</Heading>
-      <Fav></Fav>
+      <Heading  style={styles.header} size="xl" paddingBottom="1">Favorites</Heading>
+      {userData}
     </View>
   );
 }
@@ -34,11 +54,11 @@ export default function Favorites() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "flex-start",
-      justifyContent: "flex-start",
-      paddingTop: 100,
+      backgroundColor: "#fff", 
+      width: '90%',
+      alignItems: 'center',      
+    },    
+    header: {
+      paddingTop: 20,     
     },
-    center: {
-    }
   });

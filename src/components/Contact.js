@@ -69,12 +69,12 @@ export default function Contact(props) {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      width : "85%",
+      flexDirection:'row',
       backgroundColor: "#fff",
       alignItems: "center",
-      justifyContent: "space-between",
-      flexDirection:'row', 
-      marginTop: 50,     
-      padding: 10,
+      justifyContent: "space-between",  
+      
     },
     name: {      
       color: '#FF0000',
